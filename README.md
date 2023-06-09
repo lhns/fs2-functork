@@ -11,8 +11,8 @@
 ### build.sbt
 
 ```sbt
-libraryDependencies += "de.lhns" %% "fs2-functork" % "0.1.0"
-libraryDependencies += "de.lhns" %% "fs2-functork-doobie" % "0.1.0"
+libraryDependencies += "de.lhns" %% "fs2-functork" % "0.1.1"
+libraryDependencies += "de.lhns" %% "fs2-functork-doobie" % "0.1.1"
 ```
 
 ## License
