@@ -1,7 +1,7 @@
 package de.lhns.fs2.functork
 
 import cats.effect.MonadCancelThrow
-import doobie.{ConnectionIO, Transactor}
+import _root_.doobie.{ConnectionIO, Transactor}
 
 object doobie {
   def transactK[F[_] : MonadCancelThrow](xa: Transactor[F]): StreamFunctionK[ConnectionIO, F] =
