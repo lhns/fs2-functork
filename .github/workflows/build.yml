@@ -1,0 +1,42 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '*.*'
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3.11.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'sbt'
+          gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
+
+      - name: Test
+        env:
+          CI_VERSION: ${{ github.ref }}
+          SBT_OPTS: '-Xmx2G'
+        run: sbt "; test"
+
+      - name: Publish
+        if: github.event_name == 'release'
+        env:
+          CI_VERSION: ${{ github.ref }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SBT_OPTS: '-Xmx2G'
+        run: |
+          sbt "; sonatypeBundleClean; publishSigned; sonatypeBundleRelease"
