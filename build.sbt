@@ -9,7 +9,7 @@ val V = new {
   val betterMonadicFor = "0.3.1"
   val catsTagless = "0.15.0"
   val doobie = "1.0.0-RC4"
-  val fs2 = "3.9.1"
+  val fs2 = "3.9.2"
   val logbackClassic = "1.4.11"
   val munit = "0.7.29"
 }
