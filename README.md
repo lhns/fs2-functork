@@ -11,8 +11,49 @@
 ### build.sbt
 
 ```sbt
-libraryDependencies += "de.lhns" %% "fs2-functork" % "0.1.1"
-libraryDependencies += "de.lhns" %% "fs2-functork-doobie" % "0.1.1"
+libraryDependencies += "de.lhns" %% "fs2-functork" % "0.2.2"
+libraryDependencies += "de.lhns" %% "fs2-functork-doobie" % "0.2.2"
+```
+
+## Example
+
+```scala
+import cats.effect.Async
+import cats.tagless._
+import de.lhns.fs2.functork._
+import de.lhns.fs2.functork.doobie.transactK
+import doobie._
+import doobie.implicits._
+import fs2.Stream
+
+trait Repo[F[_]] {
+  def get(id: Long): F[Option[String]]
+
+  def stream: Stream[F, (Long, String)]
+}
+
+object Repo {
+  implicit val functorK: FunctorK[Repo] = Derive.functorK
+
+  val impl: Repo[ConnectionIO] = new Repo[ConnectionIO] {
+    override def get(id: Long): F[Option[String]] =
+      sql"select value from table where id = $id"
+        .query[String]
+        .option
+
+    override def stream: Stream[F, (Long, String)] =
+      sql"select id, value from table"
+        .query[(Long, String)]
+        .stream
+  }
+}
+
+object Main {
+  def repo[F[_] : Async](xa: Transactor[F]): Repo[F] = {
+    val transact = transactK(xa)
+    Repo.impl.mapK(transact)
+  }
+}
 ```
 
 ## License
