@@ -10,7 +10,7 @@ val V = new {
   val catsTagless = "0.16.1"
   val doobie = "1.0.0-RC6"
   val fs2 = "3.10.2"
-  val logbackClassic = "1.5.8"
+  val logbackClassic = "1.5.12"
   val munit = "1.0.0"
 }
 
