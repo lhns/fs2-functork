@@ -11,8 +11,8 @@
 ### build.sbt
 
 ```sbt
-libraryDependencies += "de.lhns" %% "fs2-functork" % "0.2.4"
-libraryDependencies += "de.lhns" %% "fs2-functork-doobie" % "0.2.4"
+libraryDependencies += "de.lhns" %% "fs2-functork" % "0.2.5"
+libraryDependencies += "de.lhns" %% "fs2-functork-doobie" % "0.2.5"
 ```
 
 ## Example
