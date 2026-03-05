@@ -12,7 +12,7 @@ val V = new {
   val doobie = "1.0.0-RC11"
   val fs2 = "3.12.2"
   val logbackClassic = "1.5.21"
-  val munit = "1.2.1"
+  val munit = "1.2.4"
 }
 
 lazy val commonSettings: SettingsDefinition = Def.settings(
